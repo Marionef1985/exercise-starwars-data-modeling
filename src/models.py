@@ -27,13 +27,13 @@ class Favorites(Base):
 
 class Dni(Base):
     __tablename__ = 'dni'
-    character_id = Column(Integer, ForeignKey('character.id'))
-    planet_id = Column(Integer, ForeignKey('planet.id'))
+    character_id = Column(Integer)
+    planet_id = Column(Integer)
     global_id = Column(Integer, primary_key=True)
 
 class Planet(Base):
     __tablename__ = 'planet'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, ForeignKey=('dni.planet_id'), primary_key=True)
     image = Column(String(250))
     name_planet = Column(String(250))
     population  = Column(String(250))
@@ -53,7 +53,7 @@ class Planet_Card(Base):
 
 class Character(Base):
     __tablename__ = 'character'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, ForeignKey=('dni.character_id'), primary_key=True)
     image = Column(String(250))
     name = Column(String(250))
     gender = Column(String(10))
