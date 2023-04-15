@@ -17,60 +17,51 @@ class User(Base):
     fisrt_name = Column(String(250))
     last_name = Column(String(250))
     email = Column(String(250))
+    id_favorites_planets = Column(Integer, ForeignKey('favorites_planets.planet_id'))
+    id_favorite_character = Column(Integer, ForeignKey('favorite_characters.character_id'))
 
-class Favorites(Base):
-    __tablename__ = 'favorites'
-    user_id = Column(Integer, ForeignKey('user.id'))
-    card_id = Column(Integer, ForeignKey('dni.global_id'))
-    name_card = Column(String(250), primary_key=True)
-    category = Column(String(250))
+class Favorites_Planets(Base):
+    __tablename__ = 'favorites_planets'
+    id = Column(Integer, primary_key=True)
+    planet_id = Column(Integer, ForeignKey('planets.id'))
+    name = Column(String(20), ForeignKey('planets.name'))
 
-class Dni(Base):
-    __tablename__ = 'dni'
-    character_id = Column(Integer)
-    planet_id = Column(Integer)
-    global_id = Column(Integer, primary_key=True)
+class Favorite_Characters(Base):
+    __tablename__ = 'favorite_characters'
+    id = Column(Integer, primary_key=True)
+    character_id = Column(Integer, ForeignKey('characters.id'))
+    name = Column(String(20), ForeignKey('characters.name'))
+    
 
-class Planet(Base):
-    __tablename__ = 'planet'
-    id = Column(Integer, ForeignKey=('dni.planet_id'), primary_key=True)
+
+class Planets(Base):
+    __tablename__ = 'planets'
+    id = Column(Integer, primary_key=True)
     image = Column(String(250))
-    name_planet = Column(String(250))
+    name = Column(String(250))
     population  = Column(String(250))
     terrain = Column(String(250))
-
-class Planet_Card(Base):
-    __tablename__ = 'planet_card'
-    id_planet_card = Column(Integer, ForeignKey('planet.id'))
-    image = Column(String(250))
-    name_planet = Column(String(250), primary_key=True)
     description = Column(String(500))
     climate = Column(String(250))
-    population = Column(Integer)
     oribit_period = Column(Integer)
     rotation_period = Column(Integer)
     diameter = Column(Integer)
+    
 
-class Character(Base):
-    __tablename__ = 'character'
-    id = Column(Integer, ForeignKey=('dni.character_id'), primary_key=True)
+class Characters(Base):
+    __tablename__ = 'characters'
+    id = Column(Integer, primary_key=True)
     image = Column(String(250))
-    name = Column(String(250))
+    name = Column(String(20))
     gender = Column(String(10))
-    eye_color = Column(String(250))
-    hair_color   = Column(String(250))
-
-class Character_Card(Base):
-    __tablename__ = 'character_card'
-    id_character = Column(Integer, ForeignKey('character.id'))
-    image_character = Column(String(10))
-    name_character = Column(String(20), primary_key=True)
+    eye_color = Column(String(10))
+    hair_color   = Column(String(10))
     description = Column(String(500))
     birthday = Column(String(10))
-    gender = Column(String(10))
     height = Column(Integer)
-    eye_color = Column(String(10))
     skin_color = Column(String)
+
+    
 
     def to_dict(self):
         return {}
